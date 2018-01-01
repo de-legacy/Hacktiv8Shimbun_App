@@ -1,0 +1,3 @@
+rootProject.name = 'Hacktiv8Shimbun_App'
+
+include ':app'
