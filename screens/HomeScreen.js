@@ -17,6 +17,15 @@ import { connect } from 'react-redux'
 import { fetchArticles } from '../actions/articleActions'
 
 class HomeScreen extends Component {
+  static navigationOptions = ({ navigation }) => (
+    {
+      headerTitle: 'H8Shimbun',
+      headerStyle: {
+        backgroundColor: 'gold',
+      }
+    }
+  )
+
   constructor(props) {
     super(props)
 
@@ -96,8 +105,6 @@ class HomeScreen extends Component {
       },
     }); 
 
-    console.log(`======++RENDER`)
-
     return (
       <View style={styles.container}>
         <FlatList
@@ -119,23 +126,6 @@ class HomeScreen extends Component {
             )
           }}
         />
-        {/* <FlatList
-          onEndReached={() => this.loadMoreData()}
-          onRefresh={() => this.refreshData()}
-          refreshing={this.state.isRefreshing}
-          data={this.state.articles}
-          keyExtractor={(item, index) => 'article-'+item.id}
-          renderItem={({item}) => {
-            return(
-              <TouchableOpacity onPress={() => navigate('Details', { article: item })}>
-                <ArticleRow article={item}/>
-              </TouchableOpacity>
-            )
-          }}
-          ListFooterComponent={() => { return (
-            this.state.isLoading && <ActivityIndicator size="large" color="#0000ff" />
-          ) }}
-        /> */}
       </View>
     )
   }

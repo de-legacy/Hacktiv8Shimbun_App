@@ -7,10 +7,9 @@ import HTMLView from 'react-native-htmlview'
 export default class DetailScreen extends Component {
   static navigationOptions = ({ navigation }) => (
     {
-      headerTitle: navigation.state.params.article.title.rendered,
+      headerTitle: navigation.state.params.article.title,
       headerStyle: {
-        marginTop: 24,
-        backgroundColor: 'rgba(33, 136, 182, 0.35)'
+        backgroundColor: 'gold'
       }
     }
   )
@@ -52,15 +51,14 @@ export default class DetailScreen extends Component {
 
     const { navigate, state } = this.props.navigation
     const article = state.params.article;
-    const content = article.content.rendered;
-    const featuredImageUrl = article._embedded['wp:featuredmedia'][0].source_url;
+    const content = article.content;
 
     return (
-      <ScrollView>
-        <Text style={styles.title}>{article.title.rendered}</Text>
+      <ScrollView style={{backgroundColor: '#fff'}}>
+        <Text style={styles.title}>{article.title}</Text>
 
         <View style={styles.featuredContainer}>
-          <Image style={styles.featuredImage} resizeMode="cover" source={{ uri: featuredImageUrl }} />
+          <Image style={styles.featuredImage} resizeMode="cover" source={{ uri: article.imageHeader }} />
         </View>
 
         <HTMLView

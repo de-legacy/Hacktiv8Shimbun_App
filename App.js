@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import HomeScreen from './screens/HomeScreen'
+import DetailScreen from './screens/DetailScreen'
+
 import store from './store'
 
 import { createStore } from 'redux'
@@ -10,6 +12,9 @@ import { Provider } from 'react-redux'
 const AppNavigator = StackNavigator({
   Home: {
     screen: HomeScreen,
+  },
+  Details: {
+    screen: DetailScreen,
   }
 })
 
