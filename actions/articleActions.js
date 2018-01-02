@@ -1,21 +1,21 @@
 import axios from 'axios'
 import {
+  API_URL,
   FETCH_ARTICLES,
   ADD_BOOKMARK_ARTICLE,
   DELETE_BOOKMARK_ARTICLE,
   DELETE_ALL_BOOKMARK_ARTICLE
-} from 'constants'
+} from '../constants'
 
-export const fetchArticles = () => {
+export const fetchArticles = (page) => {
   return (dispatch) => {
-    axios.get(API_URL)
-      .then(data => {
-        console.log(`Result ${data}`)
+    axios.get(API_URL + '/latest/' + page)
+      .then(({ data }) => {
 
         dispatch({
           type: FETCH_ARTICLES,
           payload: {
-            articles: data,
+            articles: data.articles
           }
         })
       }).catch(err => {

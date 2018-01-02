@@ -3,10 +3,12 @@ import {
   ADD_BOOKMARK_ARTICLE,
   DELETE_BOOKMARK_ARTICLE,
   DELETE_ALL_BOOKMARK_ARTICLE
-} from 'constants'
+} from '../constants'
 
 const initialState = {
   articles: [],
+  isLoading: false,
+  isRefreshing: false
 }
 
 export const articleReducer = (state = initialState, action) => {
