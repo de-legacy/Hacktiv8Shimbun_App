@@ -10,6 +10,7 @@ import {
   TextInput 
 } from 'react-native';
 import { Icon } from 'react-native-elements'
+import BottomNavigation, { Tab } from 'react-native-material-bottom-navigation'
 import { StackNavigator } from 'react-navigation';
 import axios from 'axios'
 import ArticleRow from '../components/ArticleRow'
@@ -35,7 +36,7 @@ class HomeScreen extends Component {
       headerTitle: 'H8Shimbun',
       headerTintColor: '#fff',
       headerStyle: {
-        backgroundColor: 'gold',  
+        backgroundColor: '#0097A7',  
       },
       headerRight: headerRight,
      };
@@ -190,6 +191,37 @@ class HomeScreen extends Component {
             )
           }}
         />
+
+        <BottomNavigation
+          labelColor="white"
+          rippleColor="white"
+          style={{ height: 56, elevation: 8, position: 'absolute', left: 0, bottom: 0, right: 0 }}
+          // onTabChange={(newTabIndex) => alert(`New Tab at position ${newTabIndex}`)}
+        >
+          <Tab
+            barBackgroundColor="#5D4037"
+            label="Home"
+            icon={<Icon size={24} color="white" type='font-awesome' name="home" />}
+          />
+          <Tab
+            barBackgroundColor="#37474F"
+            label="Bookmark"
+            onPress={() => navigate('Bookmark')}
+            icon={<Icon size={24} color="white" type='font-awesome' name="star" />}
+          />
+          <Tab
+            barBackgroundColor="#00796B"
+            label="Category"
+            onPress={() => navigate('Category')}
+            icon={<Icon size={24} color="white" type='font-awesome' name="tags" />}
+          />
+          <Tab
+            barBackgroundColor="#3E2723"
+            label="About"
+            onPress={() => navigate('About')}
+            icon={<Icon size={24} color="white" type='font-awesome' name="cog" />}
+          />
+        </BottomNavigation>
         
       </View>
     )

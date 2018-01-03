@@ -22,7 +22,7 @@ class SearchScreen extends Component {
       headerTitle: "Searching News",
       headerTintColor: '#fff',
       headerStyle: {
-        backgroundColor: 'gold',
+        backgroundColor: '#0097A7',
       },
     }
   }

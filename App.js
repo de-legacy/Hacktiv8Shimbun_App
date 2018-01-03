@@ -4,13 +4,16 @@ import { StackNavigator } from 'react-navigation';
 import HomeScreen from './screens/HomeScreen'
 import DetailScreen from './screens/DetailScreen'
 import SearchScreen from './screens/SearchScreen'
+import BookmarkScreen from './screens/BookmarkScreen'
+import CategoryScreen from './screens/CategoryScreen'
+import AboutScreen from './screens/AboutScreen'
 
 import store from './store'
 
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
-const AppNavigator = StackNavigator({
+const MyStackNavApp = StackNavigator({
   Home: {
     screen: HomeScreen,
   },
@@ -19,6 +22,15 @@ const AppNavigator = StackNavigator({
   },
   Search: {
     screen: SearchScreen,
+  },
+  Bookmark: {
+    screen: BookmarkScreen,
+  },
+  Category: {
+    screen: CategoryScreen,
+  },
+  About: {
+    screen: AboutScreen,
   }
 })
 
@@ -26,7 +38,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <AppNavigator />
+        <MyStackNavApp/>
       </Provider>
     );
   }
