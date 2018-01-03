@@ -9,7 +9,7 @@ import {
   ActivityIndicator, 
   TextInput 
 } from 'react-native';
-
+import { Icon } from 'react-native-elements'
 import { StackNavigator } from 'react-navigation';
 import axios from 'axios'
 import ArticleRow from '../components/ArticleRow'
@@ -20,9 +20,17 @@ class HomeScreen extends Component {
   static navigationOptions = ({ navigation }) => (
     {
       headerTitle: 'H8Shimbun',
-      headerStyle: {
-        backgroundColor: 'gold',
-      }
+      headerTintColor: '#fff',
+      headerStyle: { 
+        backgroundColor: 'gold',  
+      },
+      headerRight: <View style={{marginRight: 10}}>
+        <Icon
+          name='search'
+          type='font-awesome'
+          color='#fff'
+          onPress={() => alert('hello')} />
+      </View>,
     }
   )
 
