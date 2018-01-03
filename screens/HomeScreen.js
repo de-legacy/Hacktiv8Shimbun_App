@@ -19,8 +19,7 @@ import { fetchArticles } from '../actions/articleActions'
 class HomeScreen extends Component {  
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
-    console.log(`============= NAVSTATE`)
-    console.log(navigation.state)
+
     let headerRight = (
       <View style={{ marginRight: 10 }}>
         <Icon
@@ -54,7 +53,7 @@ class HomeScreen extends Component {
       isRefreshing: false,
       isSearching: false,
       page: 1,
-      query: 'Search here..'
+      query: ''
     }
   }
 
@@ -65,7 +64,8 @@ class HomeScreen extends Component {
       })
     } else {
       this.setState({
-        isSearching: false
+        isSearching: false,
+        query: ''
       })
     }
   }
@@ -134,8 +134,6 @@ class HomeScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation
-    console.log(`~~~~~~~~~~~RENDER`)
-    console.log(this.props)
 
     const styles = StyleSheet.create({
       title: {
@@ -164,9 +162,11 @@ class HomeScreen extends Component {
         {
           this.state.isSearching && <View style={{ width: '100%'}}>
             <TextInput
+              placeholder='Search here..'
               style={styles.searchBox}
               value={this.state.query}
               onChangeText={(text) => this.doSearch(text)}
+              onSubmitEditing={() => navigate('Search', { query: this.state.query })}
             />
           </View>
         }

@@ -1,26 +1,71 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import HTMLView from 'react-native-htmlview'
-
-
+import { Icon } from 'react-native-elements'
 
 export default class DetailScreen extends Component {
-  static navigationOptions = ({ navigation }) => (
-    {
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+
+    let headerRight = (
+      <View style={{ marginRight: 10 }}>
+        <Icon
+          name='star'
+          type='font-awesome'
+          color={params.setStarColor}
+          onPress={params.onBookmarkPress ? params.onBookmarkPress : () => null}
+        />
+      </View>
+    );
+
+    return {
       headerTitle: navigation.state.params.article.title,
-      headerStyle: {
-        backgroundColor: 'gold'
-      },
       headerTintColor: '#fff',
-    }
-  )
+      headerStyle: {
+        backgroundColor: 'gold',
+      },
+      headerRight: headerRight,
+    };
+  };
 
   constructor(props) {
     super(props)
 
     this.state = {
-      news: []
+      news: [],
+      isBookmarked: false
     }
+
+    this.onBookmarkPress = this.onBookmarkPress.bind(this)
+    this.setStarColor = this.setStarColor.bind(this)
+  }
+
+  onBookmarkPress() {
+    alert("Bookmarked")
+
+    if (this.state.isBookmarked === false) {
+      this.setState({
+        isBookmarked: true
+      })
+
+      console.log(`===============BOOKMARKED`)
+      console.log(this.state.isBookmarked)
+    }
+  }
+
+  setStarColor() {
+    if (this.state.isBookmarked) {
+      this.props.navigation.setParams({ setStarColor: 'crimson' });
+    } else {
+      this.props.navigation.setParams({ setStarColor: 'white' });
+    }
+  }
+
+  componentDidMount() {
+    // We can only set the function after the component has been initialized
+    this.props.navigation.setParams({ onBookmarkPress: this.onBookmarkPress });
+
+    this.setStarColor()
   }
 
   render() {
