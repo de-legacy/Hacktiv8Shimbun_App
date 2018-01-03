@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import HomeScreen from './screens/HomeScreen'
 import DetailScreen from './screens/DetailScreen'
+import SearchScreen from './screens/SearchScreen'
 
 import store from './store'
 
@@ -15,6 +16,9 @@ const AppNavigator = StackNavigator({
   },
   Details: {
     screen: DetailScreen,
+  },
+  Search: {
+    screen: SearchScreen,
   }
 })
 

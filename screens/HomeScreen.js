@@ -16,34 +16,64 @@ import ArticleRow from '../components/ArticleRow'
 import { connect } from 'react-redux'
 import { fetchArticles } from '../actions/articleActions'
 
-class HomeScreen extends Component {
-  static navigationOptions = ({ navigation }) => (
-    {
-      headerTitle: 'H8Shimbun',
-      headerTintColor: '#fff',
-      headerStyle: { 
-        backgroundColor: 'gold',  
-      },
-      headerRight: <View style={{marginRight: 10}}>
+class HomeScreen extends Component {  
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    console.log(`============= NAVSTATE`)
+    console.log(navigation.state)
+    let headerRight = (
+      <View style={{ marginRight: 10 }}>
         <Icon
           name='search'
           type='font-awesome'
           color='#fff'
-          onPress={() => alert('hello')} />
-      </View>,
-    }
-  )
+          onPress={params.onSearchPress ? params.onSearchPress : () => null}
+         />
+      </View>
+    );
+ 
+    return {  
+      headerTitle: 'H8Shimbun',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: 'gold',  
+      },
+      headerRight: headerRight,
+     };
+  };
 
   constructor(props) {
     super(props)
+
+    this.onSearchPress = this.onSearchPress.bind(this)
+    this.doSearch = this.doSearch.bind(this)
 
     this.state = {
       articles: [],
       isLoading: false,
       isRefreshing: false,
+      isSearching: false,
       page: 1,
       query: 'Search here..'
     }
+  }
+
+  onSearchPress() {
+    if (this.state.isSearching === false) {
+      this.setState({
+        isSearching: true
+      })
+    } else {
+      this.setState({
+        isSearching: false
+      })
+    }
+  }
+
+  doSearch(query) {
+    this.setState({
+      query: query
+    })
   }
 
   fetchNewsAPI() {
@@ -89,6 +119,11 @@ class HomeScreen extends Component {
     this.fetchNewsAPI()
   }
 
+  componentDidMount() {
+    // We can only set the function after the component has been initialized
+    this.props.navigation.setParams({ onSearchPress: this.onSearchPress });
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       articles: nextProps.articles,
@@ -99,6 +134,9 @@ class HomeScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation
+    console.log(`~~~~~~~~~~~RENDER`)
+    console.log(this.props)
+
     const styles = StyleSheet.create({
       title: {
         fontSize: 20,
@@ -111,10 +149,28 @@ class HomeScreen extends Component {
         justifyContent: 'center',
         alignItems: 'center'
       },
+
+      searchBox: { 
+        height: 40, 
+        width: '100%', 
+        backgroundColor: '#fff', 
+        borderColor: 'gray', 
+        borderWidth: 1 
+      }
     }); 
 
     return (
       <View style={styles.container}>
+        {
+          this.state.isSearching && <View style={{ width: '100%'}}>
+            <TextInput
+              style={styles.searchBox}
+              value={this.state.query}
+              onChangeText={(text) => this.doSearch(text)}
+            />
+          </View>
+        }
+
         <FlatList
           onEndReached={() => this.loadMoreData()}
           onRefresh={() => this.refreshData()}
@@ -134,6 +190,7 @@ class HomeScreen extends Component {
             )
           }}
         />
+        
       </View>
     )
   }

@@ -10,7 +10,8 @@ export default class DetailScreen extends Component {
       headerTitle: navigation.state.params.article.title,
       headerStyle: {
         backgroundColor: 'gold'
-      }
+      },
+      headerTintColor: '#fff',
     }
   )
 
