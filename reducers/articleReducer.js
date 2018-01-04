@@ -3,7 +3,8 @@ import {
   ADD_BOOKMARK_ARTICLE,
   DELETE_BOOKMARK_ARTICLE,
   DELETE_ALL_BOOKMARK_ARTICLE,
-  SEARCH_ARTICLES
+  SEARCH_ARTICLES,
+  FILTER_BY_CATEGORY
 } from '../constants'
 
 const initialState = {
@@ -26,6 +27,11 @@ export const articleReducer = (state = initialState, action) => {
       state.searchArticles = [];
       const newSearchArticles = state.searchArticles.concat(action.payload.searchArticles)
       return { ...state, searchArticles: newSearchArticles }
+
+    case FILTER_BY_CATEGORY:
+      state.searchArticles = [];
+      const filterArticles = state.searchArticles.concat(action.payload.filterArticles)
+      return { ...state, searchArticles: filterArticles }
 
     default:
       return state

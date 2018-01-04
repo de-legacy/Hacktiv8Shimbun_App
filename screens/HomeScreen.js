@@ -167,7 +167,7 @@ class HomeScreen extends Component {
               style={styles.searchBox}
               value={this.state.query}
               onChangeText={(text) => this.doSearch(text)}
-              onSubmitEditing={() => navigate('Search', { query: this.state.query })}
+              onSubmitEditing={() => navigate('Search', { searchBy: 'title', query: this.state.query })}
             />
           </View>
         }

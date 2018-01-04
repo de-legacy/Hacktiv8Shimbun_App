@@ -14,7 +14,7 @@ import { StackNavigator } from 'react-navigation';
 import axios from 'axios'
 import ArticleRow from '../components/ArticleRow'
 import { connect } from 'react-redux'
-import { fetchArticles, searchArticles } from '../actions/articleActions'
+import { fetchArticles, searchArticles, filterArticles } from '../actions/articleActions'
 
 class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -48,17 +48,16 @@ class SearchScreen extends Component {
   }
 
   render() {
-  
+    const { navigate } = this.props.navigation
     return(
-    <View>
-      <TextInput
-        placeholder='Search here..'
-        style={styles.searchBox}
-        value={this.state.query}
-        onChangeText={(text) => this.doSearch(text)}
-        onSubmitEditing={() => this.props.searchNews(this.state.query)}
-      />
-
+      <View>
+        <TextInput
+          placeholder='Search here..'
+          style={styles.searchBox}
+          value={this.state.query}
+          onChangeText={(text) => this.doSearch(text)}
+          onSubmitEditing={() => this.props.searchNews(this.state.query)}
+        />
         <FlatList
           data={this.state.searchArticles}
           keyExtractor={(item, index) => 'article-' + index}
@@ -75,19 +74,27 @@ class SearchScreen extends Component {
             )
           }}
         />
-    </View>
+      </View>
     )
   }
 
   componentDidMount() {
     const { navigate, state } = this.props.navigation
     const query = state.params.query;
-
+    const category = state.params.category;
+    const searchBy = state.params.searchBy;
+    
     this.setState({
       query: query
     })
 
-    this.props.searchNews(query)
+    if (searchBy === 'title') {
+      this.props.searchNews(query)
+    }
+    
+    if (searchBy === 'category') {
+      this.props.filterNews(category)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -119,7 +126,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    searchNews: (query) => dispatch(searchArticles(query))
+    searchNews: (query) => dispatch(searchArticles(query)),
+    filterNews: (category) => dispatch(filterArticles(category))
   }
 }
 

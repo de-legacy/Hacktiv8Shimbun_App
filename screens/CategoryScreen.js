@@ -11,17 +11,41 @@ import {
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
-import axios from 'axios'
-import ArticleRow from '../components/ArticleRow'
-import { connect } from 'react-redux'
-import { fetchArticles } from '../actions/articleActions'
+
 
 class CategoryScreen extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: 'Categories',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#0097A7',
+      }
+    };
+  };
+  
   constructor(props) {
     super(props)
 
     this.state = {
-
+      categories : [
+        'react',
+        'redux',
+        'css',
+        'start',
+        'javascript',
+        'git',
+        'html',
+        'intro',
+        'start',
+        'd3',
+        'beginner',
+        'firebase',
+        'phase 0',
+        'phase 1',
+        'phase 2',
+        'phase 3',
+      ]
     }
   }
 
@@ -47,43 +71,33 @@ class CategoryScreen extends Component {
         justifyContent: 'center',
         alignItems: 'center'
       },
+
+      catItem: {
+        width: '100%',
+        padding: 10,
+        backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd'
+      }
     });
 
     return (
       <View style={styles.container}>
-        <Text>Category</Text>
-        {/*  <FlatList
-          onEndReached={() => this.loadMoreData()}
-          onRefresh={() => this.refreshData()}
-          refreshing={this.state.isRefreshing}
-          data={this.state.newsList}
-          keyExtractor={(item, index) => 'article-'+item.id}
+         <FlatList
+          style={{ width: '100%',}}
+          data={this.state.categories}
+          keyExtractor={(item, index) => index}
           renderItem={({item}) => {
             return(
-              <TouchableOpacity onPress={() => navigate('Details', { article: item })}>
-                <ArticleRow article={item}/>
+              <TouchableOpacity style={styles.catItem} onPress={() => navigate('Search', { searchBy: 'category', category: item })}>
+                <Text>{item}</Text>
               </TouchableOpacity>
             )
           }}
-          ListFooterComponent={() => { return (
-            this.state.isLoading && <ActivityIndicator size="large" color="#0000ff" />
-          ) }}
-        /> */}
+        />
       </View>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    newsList: state.articleReducer.newsList,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadNews: (page) => dispatch(fetchArticles(page))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryScreen)
+export default CategoryScreen
