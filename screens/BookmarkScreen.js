@@ -9,6 +9,7 @@ import {
   ActivityIndicator, 
   TextInput 
 } from 'react-native';
+import realm from '../realm'
 
 import { StackNavigator } from 'react-navigation';
 import axios from 'axios'
@@ -21,12 +22,15 @@ class BookmarkScreen extends Component {
     super(props)
 
     this.state = {
-
+      bookmarkList: []
     }
   }
 
   componentWillMount() {
-
+    let bookmark = realm.objects('Bookmark')
+    this.setState({
+      bookmarkList: Array.from(bookmark)
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,15 +53,13 @@ class BookmarkScreen extends Component {
       },
     }); 
 
+
     return (
       <View style={styles.container}>
-        <Text>Bookmark</Text>
-       {/*  <FlatList
-          onEndReached={() => this.loadMoreData()}
-          onRefresh={() => this.refreshData()}
-          refreshing={this.state.isRefreshing}
-          data={this.state.newsList}
-          keyExtractor={(item, index) => 'article-'+item.id}
+      
+        <FlatList
+          data={this.state.bookmarkList}
+          keyExtractor={(item, index) => 'article-'+item.title}
           renderItem={({item}) => {
             return(
               <TouchableOpacity onPress={() => navigate('Details', { article: item })}>
@@ -65,25 +67,11 @@ class BookmarkScreen extends Component {
               </TouchableOpacity>
             )
           }}
-          ListFooterComponent={() => { return (
-            this.state.isLoading && <ActivityIndicator size="large" color="#0000ff" />
-          ) }}
-        /> */}
+        />
       </View>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    newsList: state.articleReducer.newsList,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // loadNews: (page) => dispatch(fetchArticles(page))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BookmarkScreen)
+export default BookmarkScreen
+// export default connect(mapStateToProps, mapDispatchToProps)(BookmarkScreen)

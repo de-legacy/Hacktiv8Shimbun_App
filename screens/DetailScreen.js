@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import HTMLView from 'react-native-htmlview'
 import { Icon } from 'react-native-elements'
+import realm from '../realm'
 
 export default class DetailScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -32,6 +33,7 @@ export default class DetailScreen extends Component {
     super(props)
 
     this.state = {
+      realm: null,
       news: [],
       isBookmarked: false
     }
@@ -42,7 +44,23 @@ export default class DetailScreen extends Component {
 
   onBookmarkPress() {
     if (this.state.isBookmarked === false) {
-      alert("Bookmarked ")
+      const { navigate, state } = this.props.navigation
+
+      alert("Bookmarked " + JSON.stringify(state.params.article))
+
+      const article = state.params.article
+
+      realm.write(() => {
+        realm.create('Bookmark', {
+          _id: article._id,
+          title: article.title,
+          author: article.author,
+          imageHeader: article.imageHeader,
+          content: article.content,
+          createdAt: article.createdAt,
+          category: article.category.join()
+        });
+      });
 
       this.setState({
         isBookmarked: true
@@ -52,7 +70,7 @@ export default class DetailScreen extends Component {
     } 
 
     if (this.state.isBookmarked) {
-      alert("Bookmark removed ")
+      // alert("Bookmark removed ")
 
       this.setState({
         isBookmarked: false

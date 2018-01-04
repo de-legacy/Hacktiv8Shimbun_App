@@ -69,7 +69,7 @@ class AboutScreen extends Component {
       <View style={styles.container}>
         <Text style={styles.header}>Hacktiv8 Shimbun</Text>
         <Text style={{ color: 'blue', marginBottom: 5 }}
-          onPress={() => Linking.openURL('https://github.com/fujianto/Hacktiv8Shimbun_App')}>https://github.com/fariswd/Hacktiv8Shimbun_Backend/</Text>
+          onPress={() => Linking.openURL('https://github.com/fariswd/Hacktiv8Shimbun_Backend')}>https://github.com/fariswd/Hacktiv8Shimbun_Backend/</Text>
         <Text style={{ color: 'blue', marginBottom: 10 }}
           onPress={() => Linking.openURL('https://github.com/fujianto/Hacktiv8Shimbun_App')}> https://github.com/fujianto/Hacktiv8Shimbun_App</Text>
 
