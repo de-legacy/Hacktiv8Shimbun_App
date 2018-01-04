@@ -37,7 +37,7 @@ class SearchScreen extends Component {
       isSearching: false,
       query : ''
     }
-
+    
     this.doSearch = this.doSearch.bind(this)
   }
 
@@ -85,7 +85,8 @@ class SearchScreen extends Component {
     const searchBy = state.params.searchBy;
     
     this.setState({
-      query: query
+      query: query,
+      isLoading: true
     })
 
     if (searchBy === 'title') {

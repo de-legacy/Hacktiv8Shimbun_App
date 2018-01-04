@@ -78,10 +78,6 @@ class HomeScreen extends Component {
   }
 
   fetchNewsAPI() {
-    this.setState({
-      isLoading: true
-    })
-
     this.props.loadNews(this.state.page)
   }
 
@@ -104,10 +100,8 @@ class HomeScreen extends Component {
 
   loadMoreData() {
     if (this.state.articles.length > 0) {
-      
-
       this.setState({
-        isLoading: true
+        isRefreshing: true
       })
 
       let page = this.state.page += 1
@@ -117,6 +111,10 @@ class HomeScreen extends Component {
   }
 
   componentWillMount() {
+    this.setState({
+      isLoading: true
+    })
+    console.log(this.state.isLoading)
     this.fetchNewsAPI()
   }
 

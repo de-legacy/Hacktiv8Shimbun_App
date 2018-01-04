@@ -10,15 +10,14 @@ import {
 const initialState = {
   articles: [],
   searchArticles: [],
-  isLoading: false,
-  isRefreshing: false
+  isLoading: true, isRefreshing: false
 }
 
 export const articleReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_ARTICLES:
       const newArticles = state.articles.concat(action.payload.articles)
-      return { ...state, articles: newArticles }
+      return { ...state, articles: newArticles, isLoading: false, isRefreshing: false }
     
     case ADD_BOOKMARK_ARTICLE:      
       return state
@@ -26,12 +25,12 @@ export const articleReducer = (state = initialState, action) => {
     case SEARCH_ARTICLES:
       state.searchArticles = [];
       const newSearchArticles = state.searchArticles.concat(action.payload.searchArticles)
-      return { ...state, searchArticles: newSearchArticles }
+      return { ...state, searchArticles: newSearchArticles, isLoading: false, isRefreshing: false }
 
     case FILTER_BY_CATEGORY:
       state.searchArticles = [];
       const filterArticles = state.searchArticles.concat(action.payload.filterArticles)
-      return { ...state, searchArticles: filterArticles }
+      return { ...state, searchArticles: filterArticles, isLoading: false, isRefreshing: false }
 
     default:
       return state
