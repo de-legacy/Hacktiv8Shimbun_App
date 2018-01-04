@@ -5,7 +5,7 @@ class Bookmark extends Realm.Object {}
 Bookmark.schema = {
   name: 'Bookmark',
   properties: {
-    _id: 'string',
+    id: 'string',
     title: 'string',
     author: 'string',
     imageHeader: 'string',

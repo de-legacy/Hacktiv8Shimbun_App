@@ -13,7 +13,7 @@ export default class DetailScreen extends Component {
         <Icon
           name='star'
           type='font-awesome'
-          color={params.setStarColor}
+          color={params.setStarColor ? params.setStarColor : '#fff'}
           onPress={params.onBookmarkPress ? params.onBookmarkPress : () => null}
         />
       </View>
@@ -43,23 +43,22 @@ export default class DetailScreen extends Component {
   }
 
   onBookmarkPress() {
+    const { navigate, state } = this.props.navigation
+    const article = state.params.article
+
     if (this.state.isBookmarked === false) {
-      const { navigate, state } = this.props.navigation
-
-      alert("Bookmarked " + JSON.stringify(state.params.article))
-
-      const article = state.params.article
+      alert(article.title+" Bookmarked")
 
       realm.write(() => {
         realm.create('Bookmark', {
-          _id: article._id,
+          id: article._id,
           title: article.title,
           author: article.author,
           imageHeader: article.imageHeader,
           content: article.content,
           createdAt: article.createdAt,
           category: article.category.join()
-        });
+        }, true);
       });
 
       this.setState({
@@ -67,31 +66,32 @@ export default class DetailScreen extends Component {
       })
 
       this.props.navigation.setParams({ setStarColor: 'gold' });
-    } 
-
-    if (this.state.isBookmarked) {
-      // alert("Bookmark removed ")
-
-      this.setState({
-        isBookmarked: false
-      })
-
-      this.props.navigation.setParams({ setStarColor: 'white' });
-    } 
+    }  
   }
 
   setStarColor() {
-    if (this.state.isBookmarked) {
+    const { navigate, state } = this.props.navigation
+    const article = state.params.article
+
+    let currentArticle = realm.objects('Bookmark');
+    let articleBookmarked = currentArticle.filtered(`id = "${article._id}"`);
+
+    if (Array.from(articleBookmarked).length > 0) {
       this.props.navigation.setParams({ setStarColor: 'gold' });
+      this.setState({
+        isBookmarked: true
+      })
+
     } else {
       this.props.navigation.setParams({ setStarColor: 'white' });
+      this.setState({
+        isBookmarked: false
+      })
     }
   }
 
   componentDidMount() {
-    // We can only set the function after the component has been initialized
     this.props.navigation.setParams({ onBookmarkPress: this.onBookmarkPress });
-
     this.setStarColor()
   }
 

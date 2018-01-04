@@ -121,7 +121,6 @@ class HomeScreen extends Component {
   }
 
   componentDidMount() {
-    // We can only set the function after the component has been initialized
     this.props.navigation.setParams({ onSearchPress: this.onSearchPress });
   }
 
@@ -198,11 +197,6 @@ class HomeScreen extends Component {
           style={{ height: 56, elevation: 8, position: 'absolute', left: 0, bottom: 0, right: 0 }}
           // onTabChange={(newTabIndex) => alert(`New Tab at position ${newTabIndex}`)}
         >
-          <Tab
-            barBackgroundColor="#5D4037"
-            label="Home"
-            icon={<Icon size={24} color="white" type='font-awesome' name="home" />}
-          />
           <Tab
             barBackgroundColor="#37474F"
             label="Bookmark"
