@@ -41,21 +41,30 @@ export default class DetailScreen extends Component {
   }
 
   onBookmarkPress() {
-    alert("Bookmarked")
-
     if (this.state.isBookmarked === false) {
+      alert("Bookmarked ")
+
       this.setState({
         isBookmarked: true
       })
 
-      console.log(`===============BOOKMARKED`)
-      console.log(this.state.isBookmarked)
-    }
+      this.props.navigation.setParams({ setStarColor: 'gold' });
+    } 
+
+    if (this.state.isBookmarked) {
+      alert("Bookmark removed ")
+
+      this.setState({
+        isBookmarked: false
+      })
+
+      this.props.navigation.setParams({ setStarColor: 'white' });
+    } 
   }
 
   setStarColor() {
     if (this.state.isBookmarked) {
-      this.props.navigation.setParams({ setStarColor: 'crimson' });
+      this.props.navigation.setParams({ setStarColor: 'gold' });
     } else {
       this.props.navigation.setParams({ setStarColor: 'white' });
     }
