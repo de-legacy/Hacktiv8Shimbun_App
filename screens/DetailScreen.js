@@ -51,7 +51,7 @@ export default class DetailScreen extends Component {
 
       realm.write(() => {
         realm.create('Bookmark', {
-          id: article._id,
+          _id: article._id,
           title: article.title,
           author: article.author,
           imageHeader: article.imageHeader,
@@ -74,7 +74,7 @@ export default class DetailScreen extends Component {
     const article = state.params.article
 
     let currentArticle = realm.objects('Bookmark');
-    let articleBookmarked = currentArticle.filtered(`id = "${article._id}"`);
+    let articleBookmarked = currentArticle.filtered(`_id = "${article._id}"`);
 
     if (Array.from(articleBookmarked).length > 0) {
       this.props.navigation.setParams({ setStarColor: 'gold' });
